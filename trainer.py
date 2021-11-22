@@ -19,7 +19,7 @@ def make_processor():
 
 
 processor = make_processor()
-root_data_dir = './kotrocr/data/'
+root_data_dir = './data/'
 ## dataset만들기 -- custom dataset 추가
 # img, labels -> [[img1, label1(labelin,labelout)],[img2, label2(labelin,labelout)]
 df = CustomDataset(None,processor=processor, data_dir=root_data_dir).df
