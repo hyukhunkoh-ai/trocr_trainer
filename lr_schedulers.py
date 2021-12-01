@@ -6,11 +6,11 @@ def get_lr(optimizer):
     return lr
     # decay = lr * warmup ** 0.5
 
-def get_scheduler(optimizer):
+def get_scheduler(optimizer,warmup=5):
     '''
     name == "inverse_sqrt"
     '''
-    warmup = 500
+    warmup = warmup
     init_lr = 1e-8
     lr = get_lr(optimizer)
     lr_step = (lr-init_lr) / warmup
