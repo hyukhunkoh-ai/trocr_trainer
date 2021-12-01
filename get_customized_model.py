@@ -122,5 +122,5 @@ def get_original_model(checkpoint_url="trocr-large-handwritten.pt"):
     model.load_state_dict(state_dict)
     for param in model.parameters():
         param.requires_grad = False
-        model.save_pretrained('./trocr_custom_pretrained')
+        model.save_pretrained('./original_trocr.pth')
     return model
