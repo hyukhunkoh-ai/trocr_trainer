@@ -31,8 +31,11 @@ for i in tqdm.tqdm(range(0,int(total_count/count))):
 ```
 
 
-multi_train으로 학습 시키고
+## multi_train으로 학습
+```
+python multi_train.py --gpus 3 --mode {finetune or embed} --devices 0,1,2
+```
 
-eval로 결과치 평가하고
+## eval로 결과치 평가
 
-test로 여러 테스트 데이터 예측한다.
+## test로 여러 테스트 데이터 예측한다.
