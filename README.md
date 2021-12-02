@@ -9,7 +9,24 @@ this is for training ko_trocr
 - 이미지 크기를 선택한다.
 생성한다.
 ```
-
+import subprocess, sys, tqdm, random
+count = 500 #~7000
+total_count = 10000
+left = []
+for i in tqdm.tqdm(range(0,int(total_count/count))):
+    fd_size = 64
+    text_color = '#020202'
+    p = subprocess.run(
+        args=[sys.executable, './trdg/run.py', '--output_dir', f'hyukhun/word_test/', '-hyukhun', '-f',
+         str(fd_size), '-c', str(count), '--start_count', str(count*i), '-fd', 'trdg/fonts/test', 
+         '-id',f'backgrounds/test/', '-b', '3', '-tc', f'{text_color}', '-na', '2', '-t', '4'], capture_output=True, encoding='utf-8')
+    if p.stderr:
+        print(p.stderr)
+    print(p.stdout)
+    if 'too many function definitions' in p.stderr:
+        left.append(p.stdout.split('__split__')[1].strip('[]'))
+    print(f'{i}_done')
+    print('-'*80)
 
 ```
 
