@@ -4,9 +4,9 @@ this is for training ko_trocr
 
 
 ### textgenerator 사용법
-trdg/fonts/ko/에 원하는 ttf font 파일을 넣는다.
-backgrounds에 원하는 배경을 넣는다.
-이미지 크기를 선택한다.
+- trdg/fonts/ko/에 원하는 ttf font 파일을 넣는다.
+- backgrounds에 원하는 배경을 넣는다.
+- 이미지 크기를 선택한다.
 생성한다.
 ```
 
