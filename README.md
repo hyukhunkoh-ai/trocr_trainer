@@ -49,106 +49,19 @@ python multi_train.py --gpus 3 --mode {finetune or embed} --devices 0,1,2
 
 
 
-## 폴더 / 파일 설명
-- 이미지파일 및 라벨링파일 등이 포함되는 폴더들은 용량이 너무 큰 관계로 레포지토리에 업데이트하지 못하였다.
-- 가이드대로 따라하는 경우, 아래와 같은 폴더 구조가 만들어진다.
+## 데이터 폴더 설명
+- 이미지와 라벨은 따로 올리지 않았으니 참고 바란다.
+- 데이터를 다음과 같이 놓으면 된다.
 ```
-deep-text-recognition-benchmark
-  |--htr_data              
-    |--train              # AIhub 필기체 이미지 - train dataset 파일들을 포함
-    |--test               # AIhub 필기체 이미지 - test dataset 파일들을 포함
-    |--validation         # AIhub 필기체 이미지 - validation dataset 파일들을 포함
-    |--get_images.py      # kor_dataset/aihub_data/htr/images에서 이미지 파일들을 가져와 train, test, validation 폴더로 분리
-    |--gt_train.py        # train dataset gt file
-    |--gt_test.py         # test dataset gt file
-    |--gt_validation.py   # validation dataset gt file
-  |--demo.py              # pretrained model을 test               
-  |--train.py             # model training
-  |--test.py
-  |--...
-    
-kor_dataset
-  |--aihub_data
-    |--htr
-      |--images                       # AIhub 필기체 이미지 파일들을 포함
-      |--handwriting_data_info1.json  # AIhub 필기체 이미지들에 대한 라벨링 파일
-  |--finetuning_data
-    |--made1
-       |--images                       # 직접 제작한 데이터셋 이미지 파일들을 포함
-       |--labels.txt                   # 직접 제작한 데이터셋 이미지들에 대한 라벨링 파일
-       
-saved_models                           # Train 이후 모델이 저장되는 폴더
-  |--TPS-ResNet-BiLSTM-CTC-Seed1234
-    |--best_accuracy.pth               # 정확도 제일 높은 pretrained model
-    |--...
-    
-pretrained_models                      # pretrained models를 옮겨둘 폴더
-  |--kocrnn.pth
-  |--...
-    
-test                                   # 별도로 테스트할 dataset들을 저장하는 폴더
-  |--images
-  |--labels.txt
+
+  |--data              
+    |--images              # 글씨 이미지
+    |--labels.txt          # 정답 셋
 
 ```
 <br>
 
 
-
-### 1. Preprocessing
-####  1-1) AI Hub 한국어 글자체 이미지 데이터셋 가공(htr)
-I. AI Hub에서 필기체 데이터셋을 [다운로드](https://aihub.or.kr/aidata/133/download) 받는다. <br>
-II. 이미지 파일들은 kor_dataset/aihub_data/htr/images/ 폴더에 저장하고, 라벨링 파일은 kor_dataset/aihub_data/htr/ 폴더에 저장한다. <br>
-III. aihub_dataset.py를 열어 아래와 같이 변수 값을 수정한다. <br>
-```python3
-data_type = 'htr'
-labeling_filename = 'handwriting_data_info1.json'
-```
-IV. AI Hub 데이터셋의 라벨링 파일 구조는 아래와 같다.<br>
-```
-# handwriting_data_info1.json
-{
-  'info': ...,
-  'images': {
-    [
-      'id': '00000002',
-      'width': 3755,
-      'height': 176,
-      'file_name': '00000002.png',
-      'license': 'AI 오픈 이노베이션 허브'
-    ],
-    ...
-  }
-  'annoations': {
-    [
-      'id': '00000002',
-      'image_id': '00000002',
-      'text': '여기가 이미지 파일에 대한 라벨이 기입된 곳입니다.',
-      'attributes': {
-        'age': '28',
-        'gender': '여',
-        'job': '직장인',
-        'type': '문장'
-      }
-    ],
-    ...
-  }
-  'licenses': ...
-}
-```
-V. 아래 파일을 실행시켜 데이터 전처리를 수행한다.<br>
-```
-python3 aihub_dataset.py
-```
-이후 deep-text-recognition-benchmark/htr_data/ 폴더에 gt_test.txt, gt_train.txt, gt_validation.txt가 생성된다.<br>
-
-#### 1-2) 직접 제작한 데이터셋 가공: finetuning_dataset.py
-I. 해당 데이터셋을 다운로드 받는다.<br>
-II. 이미지 파일들은 kor_dataset/finetuning_data/made1/images/ 폴더에 저장하고, 라벨링 파일은 kor_dataset/aihub_data/made1/ 폴더에 저장한다.<br>
-III. finetuning_dataset.py를 열어 아래와 같이 변수 값을 수정한다.<br>
-```python3
-data_type = 'made1'
-```
 IV. 라벨링 파일 구조는 아래와 같다.<br>
 ```
 # labels.txt
