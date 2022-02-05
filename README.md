@@ -1,4 +1,4 @@
-![]{https://github.com/hhzzang/trocr_trainer/blob/main/images/trocr.png}
+![](https://github.com/hhzzang/trocr_trainer/blob/main/images/trocr.png)
 # kotrocr : 
 한국어 필기체 이미지 인식 모델을 Transformer 기반 encoder-decoder 구조를 이용해 학습을 진행한다.
 - 모델 : [영어 필기체 인식 모델](https://arxiv.org/abs/2109.10282)을 참고하여 한국어에 맞게 구조를 수정한다.
